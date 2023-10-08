@@ -6,10 +6,9 @@ public class Entity {
     protected int defence;
     protected int maxHealth;
     protected int health;
-    protected int damage;
     protected int maxDamage;
     protected int minDamage;
-    protected boolean isDead = false;
+    public boolean isDead = false;
 
     protected Entity (int maxHealth, int attack, int defence, int minDamage, int maxDamage) {
         try {
@@ -37,8 +36,12 @@ public class Entity {
         for (int i = 0; i < attack_mod;i++){
             int dice = (int) (Math.random() * 6 + 1);
             if (dice >= 5) {
-                enemy.takeDamage(this.getDamage());
+                int damage = this.getDamage();
+                enemy.takeDamage(damage);
+                System.out.println("Attack was successful. Damage: " + damage);
                 break;
+            } else {
+                System.out.println("Missed");
             }
         }
     }
@@ -69,8 +72,10 @@ public class Entity {
     }
 
     private void death(){
-        this.isDead = true;
-        System.out.println("Я умер");
+        if (!this.isDead){
+            this.isDead = true;
+            System.out.println("Я умер");
+        }
     }
 
     public int getAttack() {
